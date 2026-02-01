@@ -45,7 +45,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
     name: "insure.sid",
-    secret: process.env.SESSION_SECRET || "default_secret",
+    secret: "insure-secret-key-super-secure",
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -58,7 +58,9 @@ app.use(session({
 /* =========================
    DATABASE
    ========================= */
-mongoose.connect(process.env.MONGO_URI)
+const MONGO_URI = "mongodb+srv://husenhfmca25_db_user:LW%40LTpD5Z2PchG5@cluster0.jyl2qbb.mongodb.net/insurance?appName=Cluster0";
+
+mongoose.connect(MONGO_URI)
     .then(async () => {
         console.log("✅ MongoDB connected");
 
