@@ -19,18 +19,18 @@ app.use(cors({
         if (!origin) return callback(null, true);
 
         // Allow any localhost on typical frontend ports
+        // Allow any request from the deployed frontend
         const allowedOrigins = [
-            'http://localhost:5500',
-            'http://127.0.0.1:5500',
-            'http://localhost:5501',
-            'http://127.0.0.1:5501',
-            'http://localhost:5502',
-            'http://127.0.0.1:5502',
-            // Add more if needed
+            "https://vehical-insurance-backend-026c.onrender.com",
+            "https://motor-insurance-frontend.onrender.com"
         ];
 
-        // Check if origin is allowed, or if it is 'null' (for local file access)
-        if (allowedOrigins.includes(origin) || origin === "null" || origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
+        // Check if origin is allowed
+        // 🔒 STRICT SECURITY: "null" (file://) is NOT allowed.
+        // Must match allowedOrigins array or be a deployed Render app.
+        const isAllowedDocs = origin && origin.includes("onrender.com");
+
+        if (allowedOrigins.includes(origin) || isAllowedDocs) {
             callback(null, true);
         } else {
             console.log('⚠️  CORS blocked origin:', origin);
